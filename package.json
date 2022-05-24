@@ -1,12 +1,19 @@
 {
-  "name": "wx-upload",
-  "version": "1.0.0",
-  "description": "微信小程序直接上传文件到oss工具",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "redbin",
-  "license": "MIT"
+	"name": "wx-uploadfile",
+	"version": "1.0.1",
+	"description": "微信小程序直接上传文件到oss工具",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [],
+	"author": "redbin",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/jiangshan-chen/wx-upload.git"
+	},
+	"dependencies": {
+		"crypto-js": "^4.1.1"
+	}
 }
