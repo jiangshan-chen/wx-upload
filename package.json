@@ -1,8 +1,8 @@
 {
-	"name": "wx-uploadfile",
-	"version": "1.0.1",
+	"name": "wx-oss-upload",
+	"version": "1.0.4",
 	"description": "微信小程序直接上传文件到oss工具",
-	"main": "index.js",
+	"main": "src/index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},

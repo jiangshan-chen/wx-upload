@@ -3,11 +3,11 @@ const MpUploadOssHelper = require("./uploadOssHelper.js");
 class WxUpload {
 	/**
 	 * @description 参数以对象形式传入
-	 * @param {String} accessKeyId
-	 * @param {String} accessKeySecret
-	 * @param {Number} timeout
-	 * @param {Number} maxSize
-	 * @param {Number} expirationTime 
+	 * @param {String} accessKeyId 阿里云用户标识
+	 * @param {String} accessKeySecret 阿里云用户验证密钥
+	 * @param {Number} timeout 限制参数的生效时间，单位为小时，默认值为1。
+	 * @param {Number} maxSize 限制上传文件的大小，单位为MB，默认值为10。
+	 * @param {Number} expirationTime STS过期时间
 	 */
 	constructor(ops) {
 		this.accessKeyId = ops.accessKeyId;
@@ -16,16 +16,13 @@ class WxUpload {
 		this.timeout = ops.timeout || 1;
 		// 限制上传文件的大小，单位为MB，默认值为10。
 		this.maxSize = ops.maxSize || 10;
-		this.expirationTime = expirationTime
+		this.expirationTime = ops.expirationTime
 	}
-
-
-	uploadParams = {} // 上传所需参数
-	expirationTime = null; //过期时间
 
 	getUploadHeper() {
 		return new Promise((resolve, reject) => {
-			if (!this.expirationTime || Date.now() > new Date(this.expirationTime).getTime()) {
+			if (!this.expiration|| Date.now() > new Date(this.expiration).getTime()) {
+				this.expiration = this.expirationTime 
 				const mpHelper = new MpUploadOssHelper({
 					accessKeyId: this.accessKeyId,
 					accessKeySecret: this.accessKeySecret,
@@ -35,15 +32,10 @@ class WxUpload {
 
 				const params = mpHelper.createUploadParams();
 				this.uploadParams = params;
-				resolve({
-					params: params
-				})
-			} else {
-				resolve({
-					params: uploadParams
-				})
 			}
-
+			resolve({
+				params: this.uploadParams
+			})
 		})
 	}
 
@@ -56,9 +48,9 @@ class WxUpload {
 	 * @param {String} securityToken STS签名Token。
 	 */
 	async uploadFile(ops) {
-		
+
 		await this.getUploadHeper()
-		
+
 		return new Promise((resolve, reject) => {
 
 			let tmp = ops.filePath.split('/')
